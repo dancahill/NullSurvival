@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
 		if (!Camera.main) return;
 		if (Time.time < attackCooldown) return;
 		attackCooldown = Time.time + 0.5f;
+		character.UseStamina(5);
 		if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, SceneManager.instance.maxDinoRenderDistance, layerMask)) return;
 		Interactable ia = hit.transform.gameObject.GetComponent<Interactable>();
 		if (ia) ia.Interact(hit);

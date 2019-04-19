@@ -67,7 +67,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			// the jump state needs to read here to make sure it is not missed
 			if (!m_Jump)
 			{
-				m_Jump = CrossPlatformInputManager.GetButtonDown("Jump") || Input.GetMouseButtonDown(1);
+				m_Jump = (CrossPlatformInputManager.GetButtonDown("Jump") || Input.GetMouseButtonDown(1)) && GetComponent<Player>().character.UseStamina(10);
 			}
 
 			if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
@@ -216,6 +216,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			// keep track of whether or not the character is walking or running
 			m_IsWalking = !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift);
 #endif
+			if (!m_IsWalking && !GetComponent<Player>().character.UseStamina()) m_IsWalking = true;
+
 			// set the desired speed to be walking or running
 			speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
 			m_Input = new Vector2(horizontal, vertical);

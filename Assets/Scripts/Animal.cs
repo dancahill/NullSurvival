@@ -36,6 +36,7 @@ public class Animal : Interactable
 	float lifeTime;
 	float despawnTimer;
 	float attackCooldown;
+	float aggroCooldown;
 
 	protected override void Awake()
 	{
@@ -73,6 +74,7 @@ public class Animal : Interactable
 		if (SceneManager.instance.maxSpawns < 50) lifeTime = Random.Range(900, 1200);
 		else lifeTime = Random.Range(60, 120);
 		attackCooldown = Time.time;
+		aggroCooldown = Time.time;
 	}
 
 	private void Update()
@@ -80,21 +82,7 @@ public class Animal : Interactable
 		//bool close = PauseIfDistant();
 		//if (!close) return;
 		character.AutoHeal();
-		if (animator.enabled && lifeTime < 0 && !character.isDead)
-		{
-			character.isDead = true;
-			currentAggression = Aggression.Passive;
-			despawnTimer = Time.time + 15;
-			GameCanvas gc = FindObjectOfType<GameCanvas>();
-			if (gc) gc.SetToastText(name + " died of old age");
-			animator.Die();
-			return;
-		}
-		if (character.isDead && despawnTimer < Time.time)
-		{
-			Destroy(gameObject);
-			return;
-		}
+		AgeDeath();
 		lifeTime -= Time.deltaTime;
 		FindNewPrey();
 	}
@@ -117,19 +105,19 @@ public class Animal : Interactable
 		string s = transform.name;
 		if (character.isDead) s = "Dead " + s;
 		s += "\n" + currentAggression;
-		if (character.target && !character.isDead)
-		{
-			s += "\nAttacking: " + character.target.name;
-		}
+		if (character.target && !character.isDead) s += "\nAttacking: " + character.target.name;
 		s += "\nLength: " + character.bodyLength.ToString("0.0") + " metres";
 		s += "\nMax Speed: " + character.maxSpeed.ToString("0.0") + " m/s";
 		s += "\nTran Dist: " + Vector3.Distance(hit.transform.position, player.transform.position).ToString("0.0") + " metres";
 		s += "\nRay Dist: " + hit.distance.ToString("0.0") + " metres";
+		Collider c = GetComponent<Collider>();
+		if (c) s += "\nColl Dist: " + Vector3.Distance(c.ClosestPoint(player.transform.position), player.transform.position).ToString("0.0") + " metres";
 		return s;
 	}
 
 	public void TakeDamage(Transform attacker, float damage)
 	{
+		aggroCooldown = Time.time + 15;
 		character.lastAttacker = attacker;
 		if (!character.target) character.target = attacker;
 		if (!character.isDead)
@@ -160,11 +148,13 @@ public class Animal : Interactable
 		{
 			if ((currentAggression == Aggression.Passive || currentAggression == Aggression.Neutral) && a.character.isDead) return;
 			a.TakeDamage(transform, character.baseDamage);
+			aggroCooldown = Time.time + 15;
 		}
 		else if (p)
 		{
 			if ((currentAggression == Aggression.Passive || currentAggression == Aggression.Neutral) && p.character.isDead) return;
 			p.TakeDamage(transform, character.baseDamage);
+			aggroCooldown = Time.time + 15;
 		}
 		animator.SetAnim(AnimalAnimator.Anim.Attack);
 	}
@@ -181,6 +171,7 @@ public class Animal : Interactable
 	private void FindNewPrey()
 	{
 		float maxrange = 40f;
+		if (Time.time > aggroCooldown) character.target = null;
 		if (currentAggression != Aggression.Aggressive) return;
 		if (character.target && Vector3.Distance(transform.position, character.target.transform.position) < maxrange) return;
 		//Debug.Log(name + " is aggressive and needs a target to attack");
@@ -207,15 +198,37 @@ public class Animal : Interactable
 		if (nearestpassivet)
 		{
 			character.target = nearestpassivet;
+			aggroCooldown = Time.time;
 		}
 		else if (Vector3.Distance(transform.position, p.transform.position) < maxrange && !p.character.isDead)
 		{
-			character.target = p.transform;
 			Debug.Log(name + " is mad at you");
+			character.target = p.transform;
+			aggroCooldown = Time.time;
 		}
 		else if (nearestneutralt)
 		{
 			character.target = nearestneutralt;
+			aggroCooldown = Time.time;
+		}
+	}
+
+	private void AgeDeath()
+	{
+		if (animator.enabled && lifeTime < 0 && !character.isDead)
+		{
+			character.isDead = true;
+			currentAggression = Aggression.Passive;
+			despawnTimer = Time.time + 15;
+			GameCanvas gc = FindObjectOfType<GameCanvas>();
+			if (gc) gc.SetToastText(name + " died of old age");
+			animator.Die();
+			return;
+		}
+		if (character.isDead && despawnTimer < Time.time)
+		{
+			Destroy(gameObject);
+			return;
 		}
 	}
 

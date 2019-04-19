@@ -17,13 +17,13 @@ public class GameCanvas : MonoBehaviour
 
 	public Player player;
 
-
 	[Header("HUD")]
 	public Text FPSText;
 	public Text toastText;
 	public Text crosshairText;
 	public Text crosshairDescText;
 	public Image healthBar;
+	public Image staminaBar;
 
 	public float FPS { get; private set; }
 
@@ -60,7 +60,11 @@ public class GameCanvas : MonoBehaviour
 		ShowLog();
 		ShowTargetDescription();
 
-		if (player) healthBar.fillAmount = player.character.health / player.character.baseHealth;
+		if (player)
+		{
+			healthBar.fillAmount = player.character.health / player.character.baseHealth;
+			staminaBar.fillAmount = player.character.stamina / player.character.baseStamina;
+		}
 		if (CanvasManager.IsCharPanelActive()) UpdateCharacterPanel();
 	}
 
