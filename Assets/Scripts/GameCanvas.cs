@@ -56,7 +56,6 @@ public class GameCanvas : MonoBehaviour
 		{
 			FPSText.text += string.Format("\nActive: {0}/{1}", sm.totalActive, sm.totalAnimals);
 		}
-
 		//ShowMem();
 		ShowLog();
 		ShowTargetDescription();
