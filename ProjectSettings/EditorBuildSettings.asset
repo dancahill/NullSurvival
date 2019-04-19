@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Persistent.unity
+    guid: d00449de3a1954c4aa264c38706b52d8
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: 19054f6a1ec387d498bd2ff954d9ab23
+  - enabled: 1
+    path: Assets/Scenes/TestMap1.unity
+    guid: cf3c51666376b554592242d704bab9b5
+  - enabled: 1
+    path: Assets/Imports/Free Island Collection/Scenes/Scene 1.unity
+    guid: 21395a1af6f566b459cf2f256020dc81
+  m_configObjects: {}
