@@ -117,14 +117,14 @@ public class Animal : Interactable
 		string s = transform.name;
 		if (character.isDead) s = "Dead " + s;
 		s += "\n" + currentAggression;
-		if (character.target)
+		if (character.target && !character.isDead)
 		{
 			s += "\nAttacking: " + character.target.name;
 		}
 		s += "\nLength: " + character.bodyLength.ToString("0.0") + " metres";
 		s += "\nMax Speed: " + character.maxSpeed.ToString("0.0") + " m/s";
-		s += "\nDistance: " + hit.distance.ToString("0.0") + " metres";
-		s += "\nDist: " + Vector3.Distance(hit.transform.position, FindObjectOfType<Player>().transform.position).ToString("0.0") + " metres";
+		s += "\nTran Dist: " + Vector3.Distance(hit.transform.position, player.transform.position).ToString("0.0") + " metres";
+		s += "\nRay Dist: " + hit.distance.ToString("0.0") + " metres";
 		return s;
 	}
 

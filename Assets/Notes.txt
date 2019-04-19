@@ -1,0 +1,6 @@
+add building
+add inventory
+add crafting
+add melee weapons
+add projectile weapons
+add stats (i.e. stamina, experience)
