@@ -14,6 +14,15 @@ public class Ground : Interactable
 		return false;
 	}
 
+	public override string Describe(RaycastHit hit)
+	{
+		//return base.Describe(hit);
+		string s = "";
+		if (TreeManager.GetSampleHeight(hit) < 0.01f) return s;
+		s = TreeManager.GetTreeNameAt(hit.point) + " (" + hit.transform.name + ")";
+		return s;
+	}
+
 	private bool Harvest(RaycastHit hit)
 	{
 		Debug.Log("harvesting (hit.distance=" + hit.distance + ")");

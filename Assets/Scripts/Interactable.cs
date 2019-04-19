@@ -14,4 +14,9 @@ public class Interactable : MonoBehaviour
 		//Debug.Log("interacting with " + transform.name);
 		return false;
 	}
+
+	public virtual string Describe(RaycastHit hit)
+	{
+		return transform.name;
+	}
 }

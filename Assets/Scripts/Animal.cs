@@ -111,6 +111,23 @@ public class Animal : Interactable
 		return true;
 	}
 
+	public override string Describe(RaycastHit hit)
+	{
+		//return base.Describe(hit);
+		string s = transform.name;
+		if (character.isDead) s = "Dead " + s;
+		s += "\n" + currentAggression;
+		if (character.target)
+		{
+			s += "\nAttacking: " + character.target.name;
+		}
+		s += "\nLength: " + character.bodyLength.ToString("0.0") + " metres";
+		s += "\nMax Speed: " + character.maxSpeed.ToString("0.0") + " m/s";
+		s += "\nDistance: " + hit.distance.ToString("0.0") + " metres";
+		s += "\nDist: " + Vector3.Distance(hit.transform.position, FindObjectOfType<Player>().transform.position).ToString("0.0") + " metres";
+		return s;
+	}
+
 	public void TakeDamage(Transform attacker, float damage)
 	{
 		character.lastAttacker = attacker;

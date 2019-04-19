@@ -89,50 +89,11 @@ public class GameCanvas : MonoBehaviour
 	{
 		int layerMask = ~LayerMask.GetMask("Player") & ~LayerMask.GetMask("Water");
 		RaycastHit hit;
-
-		crosshairDescText.text = "";
 		if (!Camera.main) return;
+		crosshairDescText.text = "";
 		if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, SceneManager.instance.maxDinoRenderDistance, layerMask)) return;
-		int layer = hit.transform.gameObject.layer;
-		if (LayerMask.LayerToName(layer) == "Animal")
-		{
-			GameObject go = hit.transform.gameObject;
-			Animal a = hit.transform.gameObject.GetComponent<Animal>();
-			string s = go.name;
-
-			for (int i = 0; i < 3; i++)
-			{
-				if (a) break;
-				go = go.transform.parent.gameObject;
-				a = go.GetComponent<Animal>();
-			}
-			if (a)
-			{
-				s = go.name;
-				if (a.character.isDead) s = "Dead " + s;
-				//s += "\nHabitat: " + a.habitat;
-				s += "\n" + a.currentAggression;
-				if (a.character.target)
-				{
-					s += "\nAttacking: " + a.character.target.name;
-				}
-				s += "\nLength: " + a.character.bodyLength.ToString("0.0") + " metres";
-				//s += "\nMass: " + a.bodyMass;
-				s += "\nMax Speed: " + a.character.maxSpeed.ToString("0.0") + " m/s";
-				s += "\nDistance: " + hit.distance.ToString("0.0") + " metres";
-				s += "\nDist: " + Vector3.Distance(hit.transform.position, FindObjectOfType<Player>().transform.position).ToString("0.0") + " metres";
-				//s += "\nLayer: " + hit.transform.gameObject.layer + "," + LayerMask.GetMask("Animal");
-			}
-			crosshairDescText.text = "\n" + s;
-		}
-		else if (LayerMask.LayerToName(layer) == "Ground" && TreeManager.GetSampleHeight(hit) > 0.01f)
-		{
-			crosshairDescText.text = "\n" + TreeManager.GetTreeNameAt(hit.point) + " (" + hit.transform.name + ")";
-			//CapsuleCollider cc = GetComponent<CapsuleCollider>();
-			//if (cc) crosshairDescText.text += "\ncc.name=" + cc.name;
-			//BoxCollider bc = GetComponent<BoxCollider>();
-			//if (bc) crosshairDescText.text += "\nbc.name=" + cc.name;
-		}
+		Interactable ia = hit.transform.gameObject.GetComponent<Interactable>();
+		if (ia) crosshairDescText.text = "\n" + ia.Describe(hit);
 	}
 
 	void UpdateCharacterPanel()

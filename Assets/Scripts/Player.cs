@@ -48,30 +48,14 @@ public class Player : MonoBehaviour
 
 	public void Attack()
 	{
+		int layerMask = ~LayerMask.GetMask("Player") & ~LayerMask.GetMask("Water");
+		RaycastHit hit;
+		if (!Camera.main) return;
 		if (Time.time < attackCooldown) return;
 		attackCooldown = Time.time + 0.5f;
-		if (!Camera.main) return;
-		RaycastHit hit;
-
-		int layerMask = ~LayerMask.GetMask("Player") & ~LayerMask.GetMask("Water");
-		//int layerMask = ~LayerMask.GetMask("Player");
-
 		if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, SceneManager.instance.maxDinoRenderDistance, layerMask)) return;
-
 		Interactable ia = hit.transform.gameObject.GetComponent<Interactable>();
-		if (ia)
-		{
-			ia.Interact(hit);
-		}
-//		int layer = hit.transform.gameObject.layer;
-		//Debug.Log("harvestable=" + LayerMask.NameToLayer("Harvestable"));
-		//Debug.Log("animal=" + LayerMask.NameToLayer("Animal"));
-		//if (layer == LayerMask.NameToLayer("Harvestable")) { Harvest(hit); return; }
-//		if (layer == LayerMask.NameToLayer("Ground")) { Harvest(hit); return; }
-//		if (layer != LayerMask.NameToLayer("Animal")) // 10 is Animals
-//		{
-//			return;
-//		}
+		if (ia) ia.Interact(hit);
 	}
 
 	private void Respawn()

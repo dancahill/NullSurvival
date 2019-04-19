@@ -31,7 +31,6 @@ public class CanvasManager : MonoBehaviour
 
 	public static void SetHUDActive(bool active)
 	{
-		//if (active && !instance.gameCanvas.activeSelf) instance.gameCanvas.SetActive(active);
 		if (active) SetGameCanvasActive(true);
 		instance.HUDPanel.SetActive(active);
 	}
@@ -43,21 +42,8 @@ public class CanvasManager : MonoBehaviour
 
 	public static void SetCharPanelActive(bool active)
 	{
-		//if (active && !instance.gameCanvas.activeSelf) instance.gameCanvas.SetActive(active);
 		if (active) SetGameCanvasActive(true);
 		instance.characterPanel.SetActive(active);
-		//if (active)
-		//{
-		//	Debug.Log("disabling mouse lock");
-		//	Cursor.lockState = CursorLockMode.None;
-		//	Cursor.visible = true;
-		//}
-		//else if (!active)
-		//{
-		//	Debug.Log("enabling mouse lock");
-		//	Cursor.lockState = CursorLockMode.Locked;
-		//	Cursor.visible = false;
-		//}
 	}
 
 	public static bool IsCharPanelActive()
