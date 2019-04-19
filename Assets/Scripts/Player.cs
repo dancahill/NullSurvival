@@ -57,78 +57,21 @@ public class Player : MonoBehaviour
 		//int layerMask = ~LayerMask.GetMask("Player");
 
 		if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, SceneManager.instance.maxDinoRenderDistance, layerMask)) return;
-		int layer = hit.transform.gameObject.layer;
+
+		Interactable ia = hit.transform.gameObject.GetComponent<Interactable>();
+		if (ia)
+		{
+			ia.Interact(hit);
+		}
+//		int layer = hit.transform.gameObject.layer;
 		//Debug.Log("harvestable=" + LayerMask.NameToLayer("Harvestable"));
 		//Debug.Log("animal=" + LayerMask.NameToLayer("Animal"));
 		//if (layer == LayerMask.NameToLayer("Harvestable")) { Harvest(hit); return; }
-		if (layer == LayerMask.NameToLayer("Ground")) { Harvest(hit); return; }
-		if (layer == LayerMask.NameToLayer("Ground")) { Harvest(hit); return; }
-		if (layer != LayerMask.NameToLayer("Animal")) // 10 is Animals
-		{
-			return;
-		}
-		GameObject go = hit.transform.gameObject;
-		Animal a = hit.transform.gameObject.GetComponent<Animal>();
-		for (int i = 0; i < 3; i++)
-		{
-			if (a) break;
-			go = go.transform.parent.gameObject;
-			a = go.GetComponent<Animal>();
-		}
-		if (!a) return;
-		if (hit.distance > 2) return;
-		a.character.target = transform;
-		AudioSource aud = GetComponent<AudioSource>();
-		AudioClip clip = (AudioClip)Resources.Load("Sounds/PlayerSwing1");
-		if (clip != null) aud.PlayOneShot(clip);
-		a.TakeDamage(transform, character.baseDamage);
-	}
-
-	private bool Harvest(RaycastHit hit)
-	{
-		Debug.Log("harvesting (hit.distance=" + hit.distance + ")");
-		//https://answers.unity.com/questions/650308/how-do-i-interact-with-terrain-trees.html
-
-		//Debug.Log("harvesting " + hit.transform.gameObject.layer);
-		Terrain terrain = hit.collider.gameObject.GetComponent<Terrain>();
-		// Did we click a Terrain?
-		if (terrain == null) return false;
-
-		// Was it the terrain or a terrain tree, based on SampleHeight()
-		float groundHeight = terrain.SampleHeight(hit.point);
-		if (hit.point.y - groundHeight < 0.05f)
-		{
-			Debug.Log("can't harvest dirt");
-			return false;
-		}
-
-		Vector3 pos = transform.position;
-		Vector3 dest = hit.point;
-		float y = transform.position.y - hit.point.y;
-		pos.y = 0;
-		dest.y = 0;
-		float dist = Vector3.Distance(pos, dest);
-		Debug.Log("y " + y + " xz dist " + dist);
-		if (y < -1.0f || y > 1.5f)
-		{
-			Debug.Log("y too far");
-			return false;
-		}
-		if (dist > 2f)
-		{
-			Debug.Log("dist too far");
-			return false;
-		}
-
-		// It's a terrain tree, check Proximity and Harvest
-		//if (hit.distance < 2f) Debug.Log("hit a tree");
-		//if (CheckProximity())
-		//	HarvestWood();
-
-		//Debug.Log("removing tree at " + hit.point);
-		TreeManager.RemoveAt(hit.point);
-
-		return false;
+//		if (layer == LayerMask.NameToLayer("Ground")) { Harvest(hit); return; }
+//		if (layer != LayerMask.NameToLayer("Animal")) // 10 is Animals
+//		{
+//			return;
+//		}
 	}
 
 	private void Respawn()

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(AnimalAnimator))]
 [RequireComponent(typeof(AnimalMotor))]
-public class Animal : MonoBehaviour
+public class Animal : Interactable
 {
 	public enum Aggression
 	{
@@ -38,23 +37,11 @@ public class Animal : MonoBehaviour
 	float despawnTimer;
 	float attackCooldown;
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		animator = GetComponent<AnimalAnimator>();
 		motor = GetComponent<AnimalMotor>();
-		//character = new AnimalCharacter();
-
-		//bool useCharController = true;
-		//if (useCharController)
-		//{
-		Rigidbody rb = GetComponent<Rigidbody>();
-		if (rb) Destroy(rb);
-		//}
-		//else
-		//{
-		//	CharacterController cc = GetComponent<CharacterController>();
-		//	if (cc) Destroy(cc);
-		//}
 	}
 
 	private void Start()
@@ -110,6 +97,18 @@ public class Animal : MonoBehaviour
 		}
 		lifeTime -= Time.deltaTime;
 		FindNewPrey();
+	}
+
+	public override bool Interact(RaycastHit hit)
+	{
+		base.Interact(hit);
+		if (hit.distance > 2) return false;
+		character.target = player.transform;
+		AudioSource aud = player.transform.GetComponent<AudioSource>();
+		AudioClip clip = (AudioClip)Resources.Load("Sounds/PlayerSwing1");
+		if (clip != null) aud.PlayOneShot(clip);
+		TakeDamage(player.transform, character.baseDamage);
+		return true;
 	}
 
 	public void TakeDamage(Transform attacker, float damage)

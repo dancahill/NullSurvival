@@ -18,8 +18,7 @@ public class Util
 		};
 		if (h.hit)
 		{
-			//point.y = hit.point.y;
-			if (hit.transform.name == "WaterPlane")
+			if (hit.transform.name == "Water")
 			{
 				h.waterHeight = hit.point.y;
 				Physics.Raycast(new Vector3(point.x, hit.point.y, point.z), Vector3.down, out hit, Mathf.Infinity);
