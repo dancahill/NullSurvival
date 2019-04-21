@@ -44,6 +44,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private bool m_Jumping;
 		private AudioSource m_AudioSource;
 
+		// added to interface with SimpleTouchController
+		private Vector2 touchControllerMove;
+		private Vector2 touchControllerLook;
+
 		// Use this for initialization
 		private void Start()
 		{
@@ -220,8 +224,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 			// set the desired speed to be walking or running
 			speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
+#if MOBILE_INPUT
+			m_MouseLook.LookRotation(transform, m_Camera.transform, touchControllerLook);
+			m_Input = touchControllerMove;
+#else
 			m_Input = new Vector2(horizontal, vertical);
-
+#endif
 			// normalize input if it exceeds 1 in combined length:
 			if (m_Input.sqrMagnitude > 1)
 			{
@@ -237,12 +245,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			}
 		}
 
+		public void AddMove(Vector2 move)
+		{
+			touchControllerMove = move;
+			Debug.Log(string.Format("m={0}", move));
+		}
+
+		public void AddLook(Vector2 look)
+		{
+			touchControllerLook = new Vector2(look.y, look.x);
+			Debug.Log(string.Format("l={0}", look));
+		}
 
 		private void RotateView()
 		{
 			m_MouseLook.LookRotation(transform, m_Camera.transform);
 		}
-
 
 		private void OnControllerColliderHit(ControllerColliderHit hit)
 		{
@@ -252,7 +270,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			{
 				return;
 			}
-
 			if (body == null || body.isKinematic)
 			{
 				return;

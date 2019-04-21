@@ -15,7 +15,10 @@ public class GameCanvas : MonoBehaviour
 	float lastInterval; // Last interval end time
 	float frames = 0; // Frames over current interval
 
-	public Player player;
+	Player player;
+
+	public GameObject touchControllers;
+
 
 	[Header("HUD")]
 	public Text FPSText;
@@ -37,6 +40,11 @@ public class GameCanvas : MonoBehaviour
 		frames = 0;
 		lastInterval = Time.realtimeSinceStartup;
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+#if MOBILE_INPUT
+		touchControllers.SetActive(true);
+#else
+		touchControllers.SetActive(false);
+#endif
 	}
 
 	void Update()
@@ -98,6 +106,16 @@ public class GameCanvas : MonoBehaviour
 		if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, SceneManager.instance.maxDinoRenderDistance, layerMask)) return;
 		Interactable ia = hit.transform.gameObject.GetComponent<Interactable>();
 		if (ia) crosshairDescText.text = "\n" + ia.Describe(hit);
+	}
+
+	public void OpenCharPanel()
+	{
+		CanvasManager.SetCharPanelActive(true);
+	}
+
+	public void CloseCharPanel()
+	{
+		CanvasManager.SetCharPanelActive(false);
 	}
 
 	void UpdateCharacterPanel()

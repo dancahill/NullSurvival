@@ -142,21 +142,32 @@ public class Animal : Interactable
 
 		if (currentAggression == Aggression.Passive) return;
 
+		Vector3 targetDir = character.target.position - transform.position;
+		float angle = Vector3.Angle(targetDir, transform.forward);
+		//Debug.Log(string.Format("player is at {0} degrees", angle));
+
 		Animal a = character.target.GetComponent<Animal>();
 		Player p = character.target.GetComponent<Player>();
 		if (a)
 		{
 			if ((currentAggression == Aggression.Passive || currentAggression == Aggression.Neutral) && a.character.isDead) return;
-			a.TakeDamage(transform, character.baseDamage);
+			if (angle < 45f)
+			{
+				animator.SetAnim(AnimalAnimator.Anim.Attack);
+				a.TakeDamage(transform, character.baseDamage);
+			}
 			aggroCooldown = Time.time + 15;
 		}
 		else if (p)
 		{
 			if ((currentAggression == Aggression.Passive || currentAggression == Aggression.Neutral) && p.character.isDead) return;
-			p.TakeDamage(transform, character.baseDamage);
+			if (angle < 45f)
+			{
+				animator.SetAnim(AnimalAnimator.Anim.Attack);
+				p.TakeDamage(transform, character.baseDamage);
+			}
 			aggroCooldown = Time.time + 15;
 		}
-		animator.SetAnim(AnimalAnimator.Anim.Attack);
 	}
 
 	public float AttackRange()
@@ -198,18 +209,18 @@ public class Animal : Interactable
 		if (nearestpassivet)
 		{
 			character.target = nearestpassivet;
-			aggroCooldown = Time.time;
+			aggroCooldown = Time.time + 15;
 		}
 		else if (Vector3.Distance(transform.position, p.transform.position) < maxrange && !p.character.isDead)
 		{
 			Debug.Log(name + " is mad at you");
 			character.target = p.transform;
-			aggroCooldown = Time.time;
+			aggroCooldown = Time.time + 15;
 		}
 		else if (nearestneutralt)
 		{
 			character.target = nearestneutralt;
-			aggroCooldown = Time.time;
+			aggroCooldown = Time.time + 15;
 		}
 	}
 
@@ -251,16 +262,16 @@ public class Animal : Interactable
 
 	Vector3 GetSize()
 	{
-		Animal a = GetComponent<Animal>();
+		//Animal a = GetComponent<Animal>();
 		SkinnedMeshRenderer smr = GetComponentInChildren<SkinnedMeshRenderer>();
 		if (smr != null)
 		{
 			Vector3 size = smr.bounds.size;
-			float adjustment = a.character.bodyLength / size.z;
+			float adjustment = character.bodyLength / size.z;
 			//Debug.Log(string.Format("'" + name + "',size={0},{1},{2}, should be {3}", size.x, size.y, size.z, properSize));
 			//if (1f - adjustment > .01) 
 			if (adjustment < 0.98f || adjustment > 1.02f)
-				Debug.Log(string.Format("'" + name + "',size={0}, should be {1}, adjustment={2}", size.z, a.character.bodyLength, adjustment));
+				Debug.Log(string.Format("'" + name + "',size={0}, should be {1}, adjustment={2}", size.z, character.bodyLength, adjustment));
 			return size;
 		}
 		else

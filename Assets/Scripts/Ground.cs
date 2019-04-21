@@ -19,7 +19,10 @@ public class Ground : Interactable
 		//return base.Describe(hit);
 		string s = "";
 		if (TreeManager.GetSampleHeight(hit) < 0.01f) return s;
-		s = TreeManager.GetTreeNameAt(hit.point) + " (" + hit.transform.name + ")";
+		string name = TreeManager.GetTreeNameAt(hit.point);
+		if (name.StartsWith("tree")) s = "Tree";
+		else if (name.StartsWith("bush")) s = "Bush";
+		else s = TreeManager.GetTreeNameAt(hit.point) + " (" + hit.transform.name + ")";
 		return s;
 	}
 

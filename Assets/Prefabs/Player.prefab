@@ -305,6 +305,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  character:
+    target: {fileID: 0}
+    lastAttacker: {fileID: 0}
+    baseHealth: 100
+    health: 100
+    baseStamina: 100
+    stamina: 100
+    baseDamage: 10
+    isDead: 0
+    bodyLength: 0
+    bodyMass: 0
+    maxSpeed: 0
+    turnSpeed: 0
 --- !u!114 &8979255984199661888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,9 +395,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -521,6 +535,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 0891484247b953440be16619593da55f, type: 2}
+    - target: {fileID: 13700000, guid: b8881cdc350e7bb4c86aaeec85062e2f, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8881cdc350e7bb4c86aaeec85062e2f, type: 3}
 --- !u!4 &8979255984263226605 stripped

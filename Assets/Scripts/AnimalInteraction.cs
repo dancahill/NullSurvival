@@ -18,6 +18,7 @@ public class AnimalInteraction : Interactable
 
 	public override string Describe(RaycastHit hit)
 	{
-		return animal.Describe(hit);
+		if (animal) return animal.Describe(hit);
+		return "";
 	}
 }

@@ -14,9 +14,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		public float MaximumX = 90F;
 		public bool smooth;
 		public float smoothTime = 5f;
+#if MOBILE_INPUT
+		public bool lockCursor = false;
+#else
 		public bool lockCursor = true;
-
-
+#endif
 		private Quaternion m_CharacterTargetRot;
 		private Quaternion m_CameraTargetRot;
 		private bool m_cursorIsLocked = true;
@@ -27,14 +29,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_CameraTargetRot = camera.localRotation;
 		}
 
-
-		public void LookRotation(Transform character, Transform camera)
+		public void LookRotation(Transform character, Transform camera, Vector2 rot)
 		{
-			float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-			float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+			//float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
+			//float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
-			m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
-			m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);
+			m_CharacterTargetRot *= Quaternion.Euler(0f, rot.y, 0f);
+			m_CameraTargetRot *= Quaternion.Euler(-rot.x, 0f, 0f);
 
 			if (clampVerticalRotation)
 				m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
@@ -55,21 +56,33 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			UpdateCursorLock();
 		}
 
+		public void LookRotation(Transform character, Transform camera)
+		{
+			Vector2 rot = new Vector2(CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity, CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity);
+			LookRotation(character, camera, rot);
+		}
+
 		public void SetCursorLock(bool value)
 		{
-			lockCursor = value;
+#if MOBILE_INPUT
+#else
+		lockCursor = value;
 			if (!lockCursor)
 			{//we force unlock the cursor if the user disable the cursor locking helper
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 			}
+#endif
 		}
 
 		public void UpdateCursorLock()
 		{
+#if MOBILE_INPUT
+#else
 			//if the user set "lockCursor" we check & properly lock the cursos
 			if (lockCursor)
 				InternalLockUpdate();
+#endif
 		}
 
 		private void InternalLockUpdate()
