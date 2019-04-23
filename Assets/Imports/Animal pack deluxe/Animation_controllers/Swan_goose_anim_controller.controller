@@ -266,7 +266,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: run
+  m_Name: movefast
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -293,7 +293,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: walk
+  m_Name: move
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -327,16 +327,16 @@ AnimatorStateMachine:
     m_Position: {x: 90, y: 193, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102977113650382736}
-    m_Position: {x: 492, y: 288, z: 0}
+    m_Position: {x: 40, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102932768408189266}
-    m_Position: {x: 264, y: 408, z: 0}
+    m_Position: {x: 250, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102371843969762720}
-    m_Position: {x: 36, y: 420, z: 0}
+    m_Position: {x: 400, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102849662762256262}
-    m_Position: {x: 600, y: 384, z: 0}
+    m_Position: {x: 400, y: 210, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

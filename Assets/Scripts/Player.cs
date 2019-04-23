@@ -7,7 +7,7 @@ public class Player : Interactable
 	[HideInInspector] public PlayerAnimator animator;
 	public PlayerCharacter character;
 	float attackCooldown;
-	new public bool isDead { get { return character.isDead; } }
+	//new public bool isDead { get { return character.isDead; } }
 
 	public bool runToggle;
 

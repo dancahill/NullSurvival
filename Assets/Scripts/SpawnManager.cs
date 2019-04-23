@@ -25,10 +25,13 @@ public class SpawnManager : MonoBehaviour
 
 	void Start()
 	{
-		animalPrefabs.Clear();
-		AnimalPrefabs ap = FindObjectOfType<AnimalPrefabs>();
-		foreach (GameObject a in ap.modernAnimalPrefabs) animalPrefabs.Add(a);
-		foreach (GameObject a in ap.prehistoricAnimalPrefabs) animalPrefabs.Add(a);
+		if (animalPrefabs.Count < 1)
+		{
+			animalPrefabs.Clear();
+			AnimalPrefabs ap = FindObjectOfType<AnimalPrefabs>();
+			foreach (GameObject a in ap.modernAnimalPrefabs) animalPrefabs.Add(a);
+			foreach (GameObject a in ap.prehistoricAnimalPrefabs) animalPrefabs.Add(a);
+		}
 
 		spawns = GameObject.Find("Spawns");
 		if (!spawns) spawns = new GameObject("Spawns");
@@ -39,7 +42,7 @@ public class SpawnManager : MonoBehaviour
 
 		gc = FindObjectOfType<GameCanvas>();
 		terrainSize = SceneManager.instance.GetTerrainSize();
-		Debug.Log("terrain size=x=" + terrainSize.x + ",y=" + terrainSize.y + ",z=" + terrainSize.z);
+		Debug.Log("terrain size: x=" + terrainSize.x + ",y=" + terrainSize.y + ",z=" + terrainSize.z);
 		animalCount = new List<SpawnCount>();
 		//InvokeRepeating("UpdateSpawnCounts", 5f, 5f);
 		InvokeRepeating("UpdateSpawnIdle", 0f, 1f);
@@ -122,27 +125,29 @@ public class SpawnManager : MonoBehaviour
 				spawnpoint = new Vector3(Random.Range(1f, terrainSize.x - 1f), terrainSize.y, Random.Range(1f, terrainSize.z - 1f));
 				h = Util.GetHeightAtPoint(spawnpoint);
 				// don't spawn anything in shallow water
-				if (h.waterDepth > 0f && h.waterDepth < 5f) continue;
+				if (h.waterDepth > 0f && h.waterDepth < 0.5f) continue;
 				// don't spawn anything over 300 metres - at least for now
 				if (h.groundHeight > 300) continue;
 				break;
 			} while (true);
 			if (h.waterHeight > 0)
 			{
-				prefabsearchlist = animalPrefabs.FindAll(x => x.GetComponent<Animal>().habitat == Animal.Habitat.Sea);
-				if (prefabsearchlist.Count < 1) continue;
+				spawnpoint.y = h.groundHeight + h.waterDepth / 2; // put it in the water at half depth
+				prefabsearchlist = animalPrefabs.FindAll(x => x.GetComponent<Animal>().habitat == Animal.Habitat.Sea && x.GetComponent<Animal>().character.bodyLength / 2f < h.waterDepth);
+#if false
 				SpawnCount c = animalCount.Find(x => x.name == prefabsearchlist[0].name);
 				if (c != null && c.count >= 3)
 				{
 					//Debug.Log("too many sharks");
 					//continue;
 				}
-				spawnpoint.y = h.groundHeight + h.waterDepth / 2; // put it in the water at half depth
+#endif
 			}
 			else
 			{
 				spawnpoint.y = h.groundHeight;
-				prefabsearchlist = animalPrefabs.FindAll(x => x.GetComponent<Animal>().habitat == Animal.Habitat.Land);
+				prefabsearchlist = animalPrefabs.FindAll(x => x.GetComponent<Animal>().habitat == Animal.Habitat.Land || x.GetComponent<Animal>().habitat == Animal.Habitat.Air);
+#if false
 				SpawnCount c = animalCount.Find(x => x.name == "Tyrannosaurus Rex");
 				if (c == null || c.count < 1)
 				{
@@ -150,9 +155,15 @@ public class SpawnManager : MonoBehaviour
 					List<GameObject> rexes = animalPrefabs.FindAll(x => x.name == "Tyrannosaurus Rex");
 					if (rexes.Count > 0) prefabsearchlist = rexes;
 				}
+#endif
 			}
-			if (prefabsearchlist.Count < 1) continue;
+			if (prefabsearchlist.Count < 1)
+			{
+				Debug.LogWarning("no suitable prefabs found");
+				return;
+			}
 			prefab = prefabsearchlist[Random.Range(0, prefabsearchlist.Count)];
+			//Debug.Log("prefab to spawn: " + prefab.name);
 
 			AnimalStats.Stats stats = AnimalStats.Animals.Find(x => x.name == prefab.name);
 			if (stats != null)

@@ -67,19 +67,15 @@ public class AnimalAnimator : MonoBehaviour
 		if (animalAnimator)
 		{ // newer animation type
 			string newclip = anim.ToString().ToLower();
-
-			//int stateHash = Animator.StringToHash("Base Layer.Run");
-
-
 			if (animalAnimator.GetCurrentAnimatorStateInfo(0).IsName("attack"))
 			{
 				//Debug.Log("Attacking");
 				return;
 			}
-			if (animal.habitat == Animal.Habitat.Sea)
+			if (!animalAnimator.HasState(0, Animator.StringToHash(newclip)))
 			{
-				if (newclip == "idle" || newclip == "walk") newclip = "swim";
-				else if (newclip == "run") newclip = "fastswim";
+				if (newclip == "walk") newclip = "move";
+				if (newclip == "run") newclip = "movefast";
 			}
 			if (!animalAnimator.HasState(0, Animator.StringToHash(newclip)))
 			{
@@ -125,7 +121,7 @@ public class AnimalAnimator : MonoBehaviour
 						case "Brontosaurus": damagedelay = 3.6f; break;
 						case "Carnotaurus": damagedelay = 0.6f; break;
 						case "Parasaurolophus": damagedelay = 0f; break;
-						case "Spinosaurus": damagedelay =0.6f; break;
+						case "Spinosaurus": damagedelay = 0.6f; break;
 						case "Stegosaurus": damagedelay = 1f; break;
 						case "Triceratops": damagedelay = 0.6f; break;
 						case "Tyrannosaurus Rex": damagedelay = 0.6f; break;

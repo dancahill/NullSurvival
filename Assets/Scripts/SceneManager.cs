@@ -32,7 +32,6 @@ public class SceneManager : MonoBehaviour
 		cameraDistances[10] = maxDinoRenderDistance; // don't render animals 100 metres or more away 
 		playerCamera.layerCullDistances = cameraDistances;
 		CanvasManager.SetHUDActive(true);
-		Debug.Log("" + Application.platform.ToString());
 	}
 
 	private void Update()

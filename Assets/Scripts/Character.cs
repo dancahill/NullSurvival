@@ -4,24 +4,25 @@ using UnityEngine;
 [Serializable]
 public class Character
 {
-	public Transform transform;
-	public Transform attackVector;
+	[HideInInspector] public Transform transform;
+	[HideInInspector] public Transform attackVector;
 
-	public Transform target;
-	public Transform lastAttacker;
+	[HideInInspector] public Transform target;
+	[HideInInspector] public Transform lastAttacker;
 
+	public bool isDead;
+
+	[Header("Stats")]
 	public float baseHealth;
 	public float health;
 	public float baseStamina;
 	public float stamina;
 	public float baseDamage;
-	public bool isDead;
-
+	[Header("Specs")]
 	public float bodyLength;
 	public float bodyMass;
 	public float maxSpeed;
 	public float turnSpeed;
-
 	public float attackRadius;
 
 	float staminaRegenCooldown;

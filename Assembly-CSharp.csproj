@@ -78,7 +78,7 @@
     <Compile Include="Assets\Scripts\AnimalAnimator.cs" />
     <Compile Include="Assets\Scripts\AnimalAnimatorEvents.cs" />
     <Compile Include="Assets\Scripts\AnimalCharacter.cs" />
-    <Compile Include="Assets\Scripts\AnimalInteraction.cs" />
+    <Compile Include="Assets\Scripts\AnimalColliderInteraction.cs" />
     <Compile Include="Assets\Scripts\AnimalMotor.cs" />
     <Compile Include="Assets\Scripts\AnimalPrefabs.cs" />
     <Compile Include="Assets\Scripts\AnimalStats.cs" />

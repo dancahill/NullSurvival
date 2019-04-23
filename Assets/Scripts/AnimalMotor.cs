@@ -25,6 +25,12 @@ public class AnimalMotor : MonoBehaviour
 		idleCooldown = Time.time;
 		destinationV = transform.forward;
 		SetNewDestination();
+
+		// some defaults to test with
+		// should probably be lower than 45
+		characterController.slopeLimit = 30;
+		//characterController.stepOffset = animal.bodyLength / 10;
+		characterController.minMoveDistance = animal.character.bodyLength / 10 * Time.deltaTime;
 	}
 
 	private void Update()
@@ -45,35 +51,24 @@ public class AnimalMotor : MonoBehaviour
 
 	private void FixedUpdateCC()
 	{
-		// need to look at this later:
-		// https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html
-
+		// need to look at this later: https://answers.unity.com/questions/242648/force-on-character-controller-knockback.html
 		if (animal.character.isDead) return;
 		if (!isMoving) return;
 		if (!characterController) return;
-
-		//if (targetisplayer) Debug.Log("aaa");
-
-		float range = animal.AttackRange();
-		if (range > 0 && GetDistanceToTarget() < range)
+		if (animal.InAttackPosition())
 		{
 			characterController.Move(Vector3.zero);
 			destinationV = transform.position;
 			animal.Attack();
+			return;
 		}
 
 		if (animal.character.target) destinationV = animal.character.target.position;
 
-		// some defaults to test with
-		characterController.slopeLimit = 30; // should probably be lower than 45
-						     //characterController.stepOffset = animal.bodyLength / 10;
-		characterController.minMoveDistance = animal.character.bodyLength / 10 * Time.deltaTime;
-
 		FaceDestination();
 		groundDistance = transform.position.y - Util.GetHeightAtPoint(transform.position).groundHeight;
-		if (SetDestination()) return;
-
 		isGrounded = characterController.isGrounded;
+		if (SetDestination()) return;
 
 		float gravity = 9.81f * Time.deltaTime;//  i know. don't care.
 		if (animal.habitat == Animal.Habitat.Sea) gravity = 0;
@@ -87,36 +82,15 @@ public class AnimalMotor : MonoBehaviour
 		}
 		else speed /= 4;
 
-		////transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, rate);
 		Vector3 dest = transform.forward * speed - transform.up * gravity;
-		//if (animal.character.target && animal.character.target.name == "Player")
-		//bool targetisplayer = animal.character.target && animal.character.target.name == "Player";
-		//if (targetisplayer) Debug.Log(string.Format("moving from {0} to {1}", transform.position, transform.position + dest));
 		characterController.Move(dest);
-
-		// fix height - probably don't need this if we include gravity in Move()
-		// height = GetHeight(transform.position);
-		// if (height > 0.1f) transform.position += Vector3.down * Mathf.Clamp(height - 0.1f, 0.0f, 1f);
-		// if (height <= 0) transform.position += Vector3.up * 0.1f;
-
 		//https://docs.unity3d.com/ScriptReference/CharacterController-velocity.html
-		/*
-		 controller = GetComponent<CharacterController>();
-		 Vector3 horizontalVelocity = controller.velocity;
-		 horizontalVelocity = new Vector3(controller.velocity.x, 0, controller.velocity.z);
-		 // The speed on the x-z plane ignoring any speed
-		 float horizontalSpeed = horizontalVelocity.magnitude;
-		 // The speed from gravity or jumping
-		 float verticalSpeed = controller.velocity.y;
-		 // The overall speed
-		 float overallSpeed = controller.velocity.magnitude;
-		*/
 		localVelocity = transform.InverseTransformDirection(characterController.velocity);
-		if (characterController.velocity.magnitude < .1)
-		{
-			//Debug.Log("moving too slow - setting new destination");
-			SetNewDestination();
-		}
+		//if (characterController.velocity.magnitude < .1)
+		//{
+		//	//Debug.Log("moving too slow - setting new destination");
+		//	SetNewDestination();
+		//}
 	}
 
 	bool SetDestination()
@@ -181,7 +155,7 @@ public class AnimalMotor : MonoBehaviour
 			}
 			else
 			{
-				if (animal.habitat == Animal.Habitat.Land)
+				if (animal.habitat == Animal.Habitat.Land || animal.habitat == Animal.Habitat.Air)
 				{
 					destinationV = new Vector3(dest.x, h.groundHeight, dest.z);
 					return;
@@ -239,7 +213,7 @@ public class AnimalMotor : MonoBehaviour
 			Gizmos.DrawWireSphere(destinationV, 1);
 			Gizmos.DrawLine(transform.position, destinationV);
 			Gizmos.color = Color.blue;
-			Gizmos.DrawWireSphere(animal.character.attackVector.position, 1);
+			Gizmos.DrawWireSphere(animal.character.attackVector.position, 0.1f);
 			Gizmos.color = Color.red;
 			Gizmos.DrawWireSphere(animal.character.attackVector.position, animal.character.attackRadius);
 			//Gizmos.DrawLine(transform.position, destinationV);

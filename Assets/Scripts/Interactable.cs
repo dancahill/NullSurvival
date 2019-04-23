@@ -3,7 +3,7 @@
 public class Interactable : MonoBehaviour
 {
 	protected Player player;
-	public bool isDead;
+	[HideInInspector] public bool isDead;
 
 	protected virtual void Awake()
 	{

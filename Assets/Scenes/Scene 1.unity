@@ -1167,19 +1167,7 @@ MonoBehaviour:
   totalAnimals: 0
   totalActive: 0
   animalCount: []
-  animalPrefabs:
-  - {fileID: 888560065454259616, guid: 744f3a4acf83443489dfa3c827ce07d5, type: 3}
-  - {fileID: 6734117511853304455, guid: 530bda964659b0b4181e9fa9119d0018, type: 3}
-  - {fileID: 7287935261950715096, guid: f7074965724331d43a7eca1ebcc2ed60, type: 3}
-  - {fileID: 7055777860662105789, guid: 0dae9ecf515805e4db56a28548497d56, type: 3}
-  - {fileID: 345120024899677269, guid: 055efd64ef85cc9449f562dcf7828dd2, type: 3}
-  - {fileID: 7756981684405134400, guid: 888f0e1b37f2b874387947ce06cd0630, type: 3}
-  - {fileID: 4008416654424527486, guid: 06dbac27a5e38fa4e8c21ca738d67e9a, type: 3}
-  - {fileID: 1827001399555616845, guid: 71a45946c19848d47ba8c36168433c9f, type: 3}
-  - {fileID: 8137827638819006443, guid: 9f9255af7cc51ab459f157c55497b0f9, type: 3}
-  - {fileID: 5470935725518870977, guid: 34ccf16cfb2642a4c89de5bc72896e56, type: 3}
-  - {fileID: 888560065454259616, guid: 57491223262d13f4ca4eccda4c424110, type: 3}
-  - {fileID: 2237908133021072138, guid: 5b1a01ba97950a14c839ec9415d4a610, type: 3}
+  animalPrefabs: []
 --- !u!4 &2132655657
 Transform:
   m_ObjectHideFlags: 0
