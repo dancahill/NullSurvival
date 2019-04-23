@@ -27,6 +27,7 @@ public class TreeManager : MonoBehaviour
 		if (!terrain.preserveTreePrototypeLayers) Debug.LogWarning("terrain.preserveTreePrototypeLayers should be true?");
 		//terrain.preserveTreePrototypeLayers = true;
 		InvokeRepeating("SpawnTrees", 10f, 10f);
+		Debug.Log("Trees: " + TreeManager.instance.terrain.terrainData.treeInstanceCount);
 	}
 
 	private void SpawnTrees()
@@ -38,7 +39,7 @@ public class TreeManager : MonoBehaviour
 			TreeInstances = new List<TreeInstance>(terrain.terrainData.treeInstances);
 
 			TreePrototype tp = terrain.terrainData.treePrototypes[dt.instance.prototypeIndex];
-			Debug.Log("planting " + tp.prefab.name);
+			//Debug.Log("planting " + tp.prefab.name);
 
 			TreeInstances.Add(dt.instance);
 			deadTrees.Remove(dt);
@@ -72,7 +73,7 @@ public class TreeManager : MonoBehaviour
 		TreeManager.instance.deadTrees.Add(new DeadTrees { instance = t, respawnCooldown = Time.time + 10 });
 		//Debug.Log("removed t.prototypeIndex=" + t.prototypeIndex);
 		TreePrototype tp = tdata.treePrototypes[t.prototypeIndex];
-		Debug.Log("removed " + tp.prefab.name);
+		//Debug.Log("removed " + tp.prefab.name);
 
 		//terrain.terrainData.treeInstances.RemoveAt();
 		TreeInstances.RemoveAt(closestTreeIndex);

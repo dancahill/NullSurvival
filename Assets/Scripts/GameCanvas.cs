@@ -19,6 +19,8 @@ public class GameCanvas : MonoBehaviour
 
 	public GameObject touchControllers;
 
+	public Text runText;
+
 
 	[Header("HUD")]
 	public Text FPSText;
@@ -49,7 +51,6 @@ public class GameCanvas : MonoBehaviour
 
 	void Update()
 	{
-		player = FindObjectOfType<Player>();
 		frames++;
 		float now = Time.time;
 		if (now > lastInterval + updateInterval)
@@ -58,20 +59,19 @@ public class GameCanvas : MonoBehaviour
 			frames = 0;
 			lastInterval = now;
 		}
-		FPSText.text = FPS.ToString("0.0") + " FPS";
+		FPSText.text = "";
 		SpawnManager sm = FindObjectOfType<SpawnManager>();
-		if (sm)
-		{
-			FPSText.text += string.Format("\nActive: {0}/{1}", sm.totalActive, sm.totalAnimals);
-		}
+		if (sm) FPSText.text = string.Format("Spawns: {0}/{1}/{2}\n", sm.totalActive, sm.totalAnimals, SceneManager.instance.maxSpawns);
+		FPSText.text += FPS.ToString("0.0") + " FPS";
 		//ShowMem();
 		ShowLog();
 		ShowTargetDescription();
-
+		player = FindObjectOfType<Player>();
 		if (player)
 		{
 			healthBar.fillAmount = player.character.health / player.character.baseHealth;
 			staminaBar.fillAmount = player.character.stamina / player.character.baseStamina;
+			runText.text = player.runToggle ? "Running" : "Walking";
 		}
 		if (CanvasManager.IsCharPanelActive()) UpdateCharacterPanel();
 	}
@@ -141,5 +141,30 @@ public class GameCanvas : MonoBehaviour
 	{
 		SetToastText("<size=30><color=red>" + text + "</color></size>");
 		Debug.LogWarning(text);
+	}
+
+
+	public void Attack()
+	{
+#if MOBILE_INPUT
+		Player player = FindObjectOfType<Player>();
+		player.Attack();
+#endif
+	}
+
+	public void Jump()
+	{
+#if MOBILE_INPUT
+		Player player = FindObjectOfType<Player>();
+		player.Jump();
+#endif
+	}
+
+	public void ToggleRun()
+	{
+#if MOBILE_INPUT
+		Player player = FindObjectOfType<Player>();
+		player.runToggle = !player.runToggle;
+#endif
 	}
 }

@@ -1,5 +1,47 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3079503232731295244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7805502858967576224}
+  m_Layer: 10
+  m_Name: AttackVector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7805502858967576224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079503232731295244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 3.54}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7756981684405134401}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6298641016053927736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7756981682954091880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e233a534dde15b3488a5887902f10d0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &2847626664295503413
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -26,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a7ba495eeab7de46bf6d1138a6d2d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!1 &7756981683487260167
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,10 +128,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7756981684405134400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 180.8, y: 17.45, z: 133.39131}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7756981683487260164}
+  - {fileID: 7805502858967576224}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -122,11 +166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0ab59a15daa8e44bb8ddf248b8746e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   character:
+    transform: {fileID: 0}
+    attackVector: {fileID: 7805502858967576224}
     target: {fileID: 0}
     lastAttacker: {fileID: 0}
-    health: 100
     baseHealth: 100
+    health: 100
+    baseStamina: 100
+    stamina: 100
     baseDamage: 10
     isDead: 0
     bodyLength: 15
@@ -617,6 +666,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2533ce83c0d17cb4f890419285b9747d, type: 3}
+--- !u!1 &7756981682954091880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100192, guid: 2533ce83c0d17cb4f890419285b9747d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7756981682954123784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7756981682954510664 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400192, guid: 2533ce83c0d17cb4f890419285b9747d,

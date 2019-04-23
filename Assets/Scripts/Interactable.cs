@@ -3,6 +3,7 @@
 public class Interactable : MonoBehaviour
 {
 	protected Player player;
+	public bool isDead;
 
 	protected virtual void Awake()
 	{
@@ -18,5 +19,11 @@ public class Interactable : MonoBehaviour
 	public virtual string Describe(RaycastHit hit)
 	{
 		return transform.name;
+	}
+
+
+	public virtual void TakeDamage(Transform attacker, float damage)
+	{
+		Debug.Log("taking damage");
 	}
 }

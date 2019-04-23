@@ -4,8 +4,12 @@ using UnityEngine;
 [Serializable]
 public class Character
 {
+	public Transform transform;
+	public Transform attackVector;
+
 	public Transform target;
 	public Transform lastAttacker;
+
 	public float baseHealth;
 	public float health;
 	public float baseStamina;
@@ -17,6 +21,8 @@ public class Character
 	public float bodyMass;
 	public float maxSpeed;
 	public float turnSpeed;
+
+	public float attackRadius;
 
 	float staminaRegenCooldown;
 
@@ -74,5 +80,12 @@ public class Character
 		}
 		health = Mathf.Clamp(health, 0, baseHealth);
 		stamina = Mathf.Clamp(stamina, 0, baseStamina);
+	}
+
+	public float NearestMeshPoint(Vector3 attacker)
+	{
+		Collider c = transform.GetComponent<Collider>();
+		float x = Vector3.Distance(c.ClosestPoint(attacker), attacker);
+		return x;
 	}
 }

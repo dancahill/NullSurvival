@@ -807,6 +807,7 @@ MonoBehaviour:
   - {fileID: 8137827638819006443, guid: 9f9255af7cc51ab459f157c55497b0f9, type: 3}
   - {fileID: 5470935725518870977, guid: 34ccf16cfb2642a4c89de5bc72896e56, type: 3}
   - {fileID: 888560065454259616, guid: 57491223262d13f4ca4eccda4c424110, type: 3}
+  - {fileID: 2237908133021072138, guid: 5b1a01ba97950a14c839ec9415d4a610, type: 3}
 --- !u!4 &835443281
 Transform:
   m_ObjectHideFlags: 0
@@ -1079,6 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9553d95c9daf60b45904d5590bfa6ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!1 &1523935109
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,3 @@
-#pragma warning disable 0649
-
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -12,6 +10,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 	[RequireComponent(typeof(AudioSource))]
 	public class FirstPersonController : MonoBehaviour
 	{
+#pragma warning disable 0649
 		[SerializeField] private bool m_IsWalking;
 		[SerializeField] private float m_WalkSpeed;
 		[SerializeField] private float m_RunSpeed;
@@ -29,7 +28,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		[SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
 		[SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
 		[SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-
+#pragma warning restore 0649
 		private Camera m_Camera;
 		private bool m_Jump;
 		private float m_YRotation;
@@ -245,18 +244,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			}
 		}
 
-		public void AddMove(Vector2 move)
-		{
-			touchControllerMove = move;
-			Debug.Log(string.Format("m={0}", move));
-		}
-
-		public void AddLook(Vector2 look)
-		{
-			touchControllerLook = new Vector2(look.y, look.x);
-			Debug.Log(string.Format("l={0}", look));
-		}
-
 		private void RotateView()
 		{
 			m_MouseLook.LookRotation(transform, m_Camera.transform);
@@ -275,6 +262,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				return;
 			}
 			body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
+		}
+
+
+		public void AddMove(Vector2 move)
+		{
+			touchControllerMove = move;
+		}
+
+		public void AddLook(Vector2 look)
+		{
+			touchControllerLook = new Vector2(look.y, look.x);
+		}
+
+		public void AddJump()
+		{
+			if (GetComponent<Player>().character.UseStamina(10)) m_Jump = true;
 		}
 	}
 }

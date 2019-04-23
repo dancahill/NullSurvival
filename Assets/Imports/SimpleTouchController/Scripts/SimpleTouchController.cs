@@ -14,7 +14,9 @@ public class SimpleTouchController : MonoBehaviour
 
 	// PRIVATE
 	[SerializeField]
+#pragma warning disable 0649
 	private RectTransform joystickArea;
+#pragma warning restore 0649
 	private bool touchPresent = false;
 	private Vector2 movementVector;
 

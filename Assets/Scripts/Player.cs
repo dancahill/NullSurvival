@@ -2,18 +2,24 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerAnimator))]
-public class Player : MonoBehaviour
+public class Player : Interactable
 {
 	[HideInInspector] public PlayerAnimator animator;
 	public PlayerCharacter character;
 	float attackCooldown;
+	new public bool isDead { get { return character.isDead; } }
+
+	public bool runToggle;
 
 	GameCanvas gc;
 
-	private void Awake()
+	protected override void Awake()
 	{
-		animator = GetComponent<PlayerAnimator>();
+		base.Awake();
 		character = new PlayerCharacter();
+		character.transform = transform;
+		character.attackVector = transform.Find("AttackVector");
+		animator = GetComponent<PlayerAnimator>();
 		gc = FindObjectOfType<GameCanvas>();
 		attackCooldown = Time.time;
 	}
@@ -24,7 +30,7 @@ public class Player : MonoBehaviour
 		if (transform.position.y < -200) TakeDamage(null, 10000);
 	}
 
-	public void TakeDamage(Transform attacker, float damage)
+	public override void TakeDamage(Transform attacker, float damage)
 	{
 		character.lastAttacker = attacker;
 		if (!character.target) character.target = attacker;
@@ -56,7 +62,17 @@ public class Player : MonoBehaviour
 		character.UseStamina(5);
 		if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, SceneManager.instance.maxDinoRenderDistance, layerMask)) return;
 		Interactable ia = hit.transform.gameObject.GetComponent<Interactable>();
-		if (ia) ia.Interact(hit);
+		if (ia)
+		{
+			bool acted = ia.Interact(hit);
+			//if (!acted) Debug.Log("ia.Interact(hit); returned false. no action taken?");
+		}
+	}
+
+	public void Jump()
+	{
+		UnityStandardAssets.Characters.FirstPerson.FirstPersonController fpc = FindObjectOfType<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
+		fpc.AddJump();
 	}
 
 	private void Respawn()

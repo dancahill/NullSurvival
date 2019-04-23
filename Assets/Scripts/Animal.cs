@@ -27,6 +27,7 @@ public class Animal : Interactable
 	//public Aggression defaultAggression;
 	public Aggression currentAggression;
 	//public bool isDead;
+	new public bool isDead { get { return character.isDead; } }
 
 	public Vector3 modelDimensions;
 
@@ -41,6 +42,8 @@ public class Animal : Interactable
 	protected override void Awake()
 	{
 		base.Awake();
+		character.transform = transform;
+		character.attackVector = transform.Find("AttackVector");
 		animator = GetComponent<AnimalAnimator>();
 		motor = GetComponent<AnimalMotor>();
 	}
@@ -65,14 +68,16 @@ public class Animal : Interactable
 		if (character.bodyLength == 0)
 		{
 			character.bodyLength = modelDimensions.z;
-			Debug.Log("couldn't find body length for " + name + " guessing " + character.bodyLength + " based on model length");
+			Debug.Log("couldn't find body length for " + name + " guessing " + character.bodyLength.ToString("0.##") + " metres based on model length");
 		}
 		if (character.bodyMass == 0) character.bodyMass = character.bodyLength / 2;
 		if (character.maxSpeed == 0) character.maxSpeed = character.bodyLength / 2;
 		if (character.turnSpeed == 0) character.turnSpeed = 1;
+		if (character.attackRadius == 0) character.attackRadius = character.bodyLength / 4f + 0.5f;
 		character.health = character.baseHealth;
-		if (SceneManager.instance.maxSpawns < 50) lifeTime = Random.Range(900, 1200);
-		else lifeTime = Random.Range(60, 120);
+		//if (SceneManager.instance.maxSpawns < 50) 
+		lifeTime = Random.Range(900, 1800);
+		//else lifeTime = Random.Range(60, 120);
 		attackCooldown = Time.time;
 		aggroCooldown = Time.time;
 	}
@@ -110,12 +115,19 @@ public class Animal : Interactable
 		s += "\nMax Speed: " + character.maxSpeed.ToString("0.0") + " m/s";
 		s += "\nTran Dist: " + Vector3.Distance(hit.transform.position, player.transform.position).ToString("0.0") + " metres";
 		s += "\nRay Dist: " + hit.distance.ToString("0.0") + " metres";
-		Collider c = GetComponent<Collider>();
-		if (c) s += "\nColl Dist: " + Vector3.Distance(c.ClosestPoint(player.transform.position), player.transform.position).ToString("0.0") + " metres";
+
+		if (!player) Debug.Log("player is null");
+		if (player.character == null) Debug.Log("player.character is null");
+		if (!player.character.attackVector) Debug.Log("player.character.attackVector is null");
+		float dist = character.NearestMeshPoint(player.character.attackVector.position);
+
+		//Collider c = GetComponent<Collider>();
+		//if (c) 
+		s += "\nColl Dist: " + dist.ToString("0.0") + " metres";
 		return s;
 	}
 
-	public void TakeDamage(Transform attacker, float damage)
+	public override void TakeDamage(Transform attacker, float damage)
 	{
 		aggroCooldown = Time.time + 15;
 		character.lastAttacker = attacker;
@@ -146,27 +158,51 @@ public class Animal : Interactable
 		float angle = Vector3.Angle(targetDir, transform.forward);
 		//Debug.Log(string.Format("player is at {0} degrees", angle));
 
-		Animal a = character.target.GetComponent<Animal>();
-		Player p = character.target.GetComponent<Player>();
-		if (a)
+
+		Interactable ia = character.target.GetComponent<Interactable>();
+		if (ia)
 		{
-			if ((currentAggression == Aggression.Passive || currentAggression == Aggression.Neutral) && a.character.isDead) return;
+			//bool acted = ia.Interact(hit);
+			//if (!acted) Debug.Log("ia.Interact(hit); returned false. no action taken?");
+			if ((currentAggression == Aggression.Passive || currentAggression == Aggression.Neutral) && ia.isDead) return;
 			if (angle < 45f)
 			{
 				animator.SetAnim(AnimalAnimator.Anim.Attack);
-				a.TakeDamage(transform, character.baseDamage);
 			}
 			aggroCooldown = Time.time + 15;
 		}
-		else if (p)
+		//Animal a = character.target.GetComponent<Animal>();
+		//Player p = character.target.GetComponent<Player>();
+		//Character c = a ? (Character)a.character : (Character)p.character;
+	}
+
+	/// <summary>
+	/// called by AnimalAnimatorEvents as a callback event from the animator
+	/// do the damage at the time of impact _if_ the animal is still alive
+	/// </summary>
+	public void DoDamage()
+	{
+		if (isDead)
 		{
-			if ((currentAggression == Aggression.Passive || currentAggression == Aggression.Neutral) && p.character.isDead) return;
-			if (angle < 45f)
+			Debug.Log(name + " cant' do damage - dead");
+			return;
+		}
+		//Debug.Log(name + " doing damage");
+		if (character.target)
+		{
+
+			float range = AttackRange();
+			if (range > 0 && motor.GetDistanceToTarget() < range)
 			{
-				animator.SetAnim(AnimalAnimator.Anim.Attack);
-				p.TakeDamage(transform, character.baseDamage);
+				//animal.Attack();
+				Vector3 targetDir = character.target.position - transform.position;
+				float angle = Vector3.Angle(targetDir, transform.forward);
+				if (angle < 45f)
+				{
+					Interactable ia = character.target.gameObject.GetComponent<Interactable>();
+					if (ia) ia.TakeDamage(transform, character.baseDamage);
+				}
 			}
-			aggroCooldown = Time.time + 15;
 		}
 	}
 
@@ -175,8 +211,14 @@ public class Animal : Interactable
 		if (!character.target) return 0;
 		Animal a = character.target.GetComponent<Animal>();
 		Player p = character.target.GetComponent<Player>();
-		Character c = a ? (Character)a.character : (Character)p.character;
-		return character.bodyLength / 2f + c.bodyLength / 2f + 0.5f;
+		Character targetcharacter = a ? (Character)a.character : (Character)p.character;
+
+
+		//float x= Vector3.Distance(a.attackVector.ClosestPoint(player.transform.position), player.transform.position).ToString("0.0") + " metres";
+
+
+
+		return character.attackRadius + targetcharacter.bodyLength / 2f;
 	}
 
 	private void FindNewPrey()

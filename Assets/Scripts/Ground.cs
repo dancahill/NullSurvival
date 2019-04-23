@@ -10,8 +10,7 @@ public class Ground : Interactable
 	public override bool Interact(RaycastHit hit)
 	{
 		base.Interact(hit);
-		Harvest(hit);
-		return false;
+		return Harvest(hit);
 	}
 
 	public override string Describe(RaycastHit hit)
@@ -29,47 +28,53 @@ public class Ground : Interactable
 	private bool Harvest(RaycastHit hit)
 	{
 		Debug.Log("harvesting (hit.distance=" + hit.distance + ")");
-		//https://answers.unity.com/questions/650308/how-do-i-interact-with-terrain-trees.html
 
+		float dist = 0;
+		// i want the collider of the tree, but can only get the terrain collider - look at this again later
+		//BoxCollider bc = hit.transform.GetComponent<BoxCollider>();
+		//if (bc) dist = Vector3.Distance(bc.ClosestPoint(player.transform.position), player.transform.position);
+		//else
+		//{
+		//	CapsuleCollider cc = hit.transform.GetComponent<CapsuleCollider>();
+		//	if (cc) dist = Vector3.Distance(cc.ClosestPoint(player.transform.position), player.transform.position);
+		//}
+		//if (dist != 0) Debug.Log("Collider Dist: " + dist.ToString("0.0") + " metres");
+
+		//https://answers.unity.com/questions/650308/how-do-i-interact-with-terrain-trees.html
 		//Debug.Log("harvesting " + hit.transform.gameObject.layer);
 		Terrain terrain = hit.collider.gameObject.GetComponent<Terrain>();
 		// Did we click a Terrain?
 		if (terrain == null) return false;
-
 		// Was it the terrain or a terrain tree, based on SampleHeight()
 		float groundHeight = terrain.SampleHeight(hit.point);
 		if (hit.point.y - groundHeight < 0.05f)
 		{
-			Debug.Log("can't harvest dirt");
+			//Debug.Log("can't harvest dirt");
 			return false;
 		}
-
 		Vector3 pos = player.transform.position;
 		Vector3 dest = hit.point;
 		float y = player.transform.position.y - hit.point.y;
 		pos.y = 0;
 		dest.y = 0;
-		float dist = Vector3.Distance(pos, dest);
-		Debug.Log("y " + y + " xz dist " + dist);
+		dist = Vector3.Distance(pos, dest);
+		//Debug.Log("y " + y + " xz dist " + dist);
 		if (y < -1.0f || y > 1.5f)
 		{
-			Debug.Log("y too far");
+			//Debug.Log("y too far");
 			return false;
 		}
 		if (dist > 2f)
 		{
-			Debug.Log("dist too far");
+			//Debug.Log("dist too far");
 			return false;
 		}
-
 		// It's a terrain tree, check Proximity and Harvest
 		//if (hit.distance < 2f) Debug.Log("hit a tree");
 		//if (CheckProximity())
 		//	HarvestWood();
-
 		//Debug.Log("removing tree at " + hit.point);
 		TreeManager.RemoveAt(hit.point);
-
-		return false;
+		return true;
 	}
 }

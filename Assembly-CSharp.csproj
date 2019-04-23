@@ -76,9 +76,11 @@
     <Compile Include="Assets\Imports\SimpleTouchController\Scripts\SimpleTouchController.cs" />
     <Compile Include="Assets\Scripts\Animal.cs" />
     <Compile Include="Assets\Scripts\AnimalAnimator.cs" />
+    <Compile Include="Assets\Scripts\AnimalAnimatorEvents.cs" />
     <Compile Include="Assets\Scripts\AnimalCharacter.cs" />
     <Compile Include="Assets\Scripts\AnimalInteraction.cs" />
     <Compile Include="Assets\Scripts\AnimalMotor.cs" />
+    <Compile Include="Assets\Scripts\AnimalPrefabs.cs" />
     <Compile Include="Assets\Scripts\AnimalStats.cs" />
     <Compile Include="Assets\Scripts\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />

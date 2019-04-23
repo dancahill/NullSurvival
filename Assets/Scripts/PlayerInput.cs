@@ -16,6 +16,8 @@ public class PlayerInput : MonoBehaviour
 
 	void GetInput()
 	{
+#if MOBILE_INPUT
+#else
 		if (CanvasManager.IsCharPanelActive())
 		{
 			if (Input.GetKeyDown(KeyCode.Tab))
@@ -42,5 +44,6 @@ public class PlayerInput : MonoBehaviour
 		{
 			CanvasManager.SetCharPanelActive(!CanvasManager.IsCharPanelActive());
 		}
+#endif
 	}
 }

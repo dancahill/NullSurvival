@@ -19,8 +19,24 @@ public class SpawnManager : MonoBehaviour
 	Vector3 terrainSize;
 	GameCanvas gc;
 
+	GameObject spawns;
+	GameObject spawnsActive;
+	GameObject spawnsInactive;
+
 	void Start()
 	{
+		animalPrefabs.Clear();
+		AnimalPrefabs ap = FindObjectOfType<AnimalPrefabs>();
+		foreach (GameObject a in ap.modernAnimalPrefabs) animalPrefabs.Add(a);
+		foreach (GameObject a in ap.prehistoricAnimalPrefabs) animalPrefabs.Add(a);
+
+		spawns = GameObject.Find("Spawns");
+		if (!spawns) spawns = new GameObject("Spawns");
+		spawnsActive = GameObject.Find("Spawns/Active");
+		if (!spawnsActive) { spawnsActive = new GameObject("Active"); spawnsActive.transform.parent = spawns.transform; }
+		spawnsInactive = GameObject.Find("Spawns/Inactive");
+		if (!spawnsInactive) { spawnsInactive = new GameObject("Inactive"); spawnsInactive.transform.parent = spawns.transform; }
+
 		gc = FindObjectOfType<GameCanvas>();
 		terrainSize = SceneManager.instance.GetTerrainSize();
 		Debug.Log("terrain size=x=" + terrainSize.x + ",y=" + terrainSize.y + ",z=" + terrainSize.z);
@@ -47,6 +63,7 @@ public class SpawnManager : MonoBehaviour
 		{
 			bool inrange = Vector3.Distance(a.transform.position, p.transform.position) <= SceneManager.instance.maxDinoActiveDistance;
 			a.gameObject.SetActive(inrange);
+			a.gameObject.transform.parent = inrange ? spawnsActive.transform : spawnsInactive.transform;
 			if (inrange) ac++;
 
 			SpawnCount sc = animalcount.Find(x => x.name == a.name);
@@ -113,6 +130,7 @@ public class SpawnManager : MonoBehaviour
 			if (h.waterHeight > 0)
 			{
 				prefabsearchlist = animalPrefabs.FindAll(x => x.GetComponent<Animal>().habitat == Animal.Habitat.Sea);
+				if (prefabsearchlist.Count < 1) continue;
 				SpawnCount c = animalCount.Find(x => x.name == prefabsearchlist[0].name);
 				if (c != null && c.count >= 3)
 				{
@@ -123,14 +141,15 @@ public class SpawnManager : MonoBehaviour
 			}
 			else
 			{
+				spawnpoint.y = h.groundHeight;
 				prefabsearchlist = animalPrefabs.FindAll(x => x.GetComponent<Animal>().habitat == Animal.Habitat.Land);
 				SpawnCount c = animalCount.Find(x => x.name == "Tyrannosaurus Rex");
 				if (c == null || c.count < 1)
 				{
 					//Debug.Log("not enough rexes");
-					prefabsearchlist = animalPrefabs.FindAll(x => x.name == "Tyrannosaurus Rex");
+					List<GameObject> rexes = animalPrefabs.FindAll(x => x.name == "Tyrannosaurus Rex");
+					if (rexes.Count > 0) prefabsearchlist = rexes;
 				}
-				spawnpoint.y = h.groundHeight;
 			}
 			if (prefabsearchlist.Count < 1) continue;
 			prefab = prefabsearchlist[Random.Range(0, prefabsearchlist.Count)];
@@ -145,7 +164,7 @@ public class SpawnManager : MonoBehaviour
 			//prefab.SetActive(false);
 
 			GameObject g = Instantiate(prefab, spawnpoint, Quaternion.identity);
-			g.transform.parent = spawns.transform;
+			g.transform.parent = spawnsActive.transform;
 			g.name = prefab.name;
 			totalAnimals++;
 
@@ -155,8 +174,8 @@ public class SpawnManager : MonoBehaviour
 			bool inrange = Vector3.Distance(g.transform.position, p.transform.position) <= SceneManager.instance.maxDinoActiveDistance;
 			g.gameObject.SetActive(inrange);
 
-			string s = string.Format("spawns={0}/{1}, new {2} at {3:0},{4:0}", totalAnimals, SceneManager.instance.maxSpawns, prefab.name, spawnpoint.x, spawnpoint.z);
-			gc.SetToastInfo(s);
+			//string s = string.Format("spawns={0}/{1}, new {2} at {3:0},{4:0}", totalAnimals, SceneManager.instance.maxSpawns, prefab.name, spawnpoint.x, spawnpoint.z);
+			//gc.SetToastInfo(s);
 		}
 	}
 }

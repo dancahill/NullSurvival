@@ -2,6 +2,7 @@
 
 // we need to attach this object to each animal on the object where the collider lives
 // which is probably not at the top level of the prefab
+[RequireComponent(typeof(MeshCollider))]
 public class AnimalInteraction : Interactable
 {
 	Animal animal;
