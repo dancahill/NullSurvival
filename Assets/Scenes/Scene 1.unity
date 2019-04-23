@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9553d95c9daf60b45904d5590bfa6ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!1 &1518804915
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +549,7 @@ PrefabInstance:
     - target: {fileID: 8979255984199492961, guid: 199d96d7eaa84d9418a264500c31b3a5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 87.3
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8979255984199492961, guid: 199d96d7eaa84d9418a264500c31b3a5,
         type: 3}

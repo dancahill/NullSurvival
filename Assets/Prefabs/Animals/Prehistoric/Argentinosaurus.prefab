@@ -121,6 +121,7 @@ MonoBehaviour:
     bodyMass: 0
     maxSpeed: 0
     turnSpeed: 0
+    attackRadius: 0
   era: 1
   habitat: 0
   currentAggression: 1
@@ -152,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 1
-  isFalling: 0
+  isGrounded: 0
   groundDistance: 0
   destinationV: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
@@ -340,6 +341,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: c4a9c351dc194a7468c5366312e090d4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: da8e555fd3254bf4eaf9b9bd82e8945d, type: 2}
     - target: {fileID: 100008, guid: c4a9c351dc194a7468c5366312e090d4, type: 3}
       propertyPath: m_Layer
       value: 10

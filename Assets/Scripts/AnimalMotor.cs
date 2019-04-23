@@ -233,15 +233,16 @@ public class AnimalMotor : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
-		if (!enabled) return;
-		Gizmos.color = Color.green;
-		Gizmos.DrawWireSphere(destinationV, 1);
-		Gizmos.DrawLine(transform.position, destinationV);
-
-		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(animal.character.attackVector.position, 1);
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(animal.character.attackVector.position, animal.character.attackRadius);
-		//Gizmos.DrawLine(transform.position, destinationV);
+		if (enabled && animal && animal.character != null)
+		{
+			Gizmos.color = Color.green;
+			Gizmos.DrawWireSphere(destinationV, 1);
+			Gizmos.DrawLine(transform.position, destinationV);
+			Gizmos.color = Color.blue;
+			Gizmos.DrawWireSphere(animal.character.attackVector.position, 1);
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireSphere(animal.character.attackVector.position, animal.character.attackRadius);
+			//Gizmos.DrawLine(transform.position, destinationV);
+		}
 	}
 }
