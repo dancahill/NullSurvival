@@ -11,6 +11,7 @@ public class SceneManager : MonoBehaviour
 	[Range(0f, 282.8f)] public float maxDinoActiveDistance;
 	[Range(0f, 10000f)] public int minSpawns;
 	[Range(0f, 10000f)] public int maxSpawns;
+	public string mapName;
 
 	void Awake()
 	{
@@ -26,17 +27,19 @@ public class SceneManager : MonoBehaviour
 	{
 		maxDinoRenderDistance = 100f;
 		maxDinoActiveDistance = 141f;
-		if (minSpawns == 0) minSpawns = 2000;
-		if (maxSpawns == 0) maxSpawns = 2000;
+		if (minSpawns == 0) minSpawns = 5000;
+		if (maxSpawns == 0) maxSpawns = 5000;
 		playerCamera = Camera.main;
 		cameraDistances[10] = maxDinoRenderDistance; // don't render animals 100 metres or more away 
-		playerCamera.layerCullDistances = cameraDistances;
+		if (playerCamera) playerCamera.layerCullDistances = cameraDistances;
 		CanvasManager.SetHUDActive(true);
+		//FindObjectOfType<LoadAssetBundles>().LoadAssetBundleMap(SceneController.GetActiveSceneName());
 	}
 
 	private void Update()
 	{
-		playerCamera.layerCullDistances = cameraDistances;
+		playerCamera = Camera.main;
+		if (playerCamera) playerCamera.layerCullDistances = cameraDistances;
 	}
 
 	public Vector3 GetTerrainSize()

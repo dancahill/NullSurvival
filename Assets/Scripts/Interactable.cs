@@ -12,6 +12,7 @@ public class Interactable : MonoBehaviour
 
 	public virtual bool Interact(RaycastHit hit)
 	{
+		if (!player) player = FindObjectOfType<Player>();
 		//Debug.Log("interacting with " + transform.name);
 		return false;
 	}

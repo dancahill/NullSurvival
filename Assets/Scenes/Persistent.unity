@@ -2211,6 +2211,7 @@ GameObject:
   - component: {fileID: 1421959746}
   - component: {fileID: 1421959747}
   - component: {fileID: 1421959748}
+  - component: {fileID: 1421959749}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2272,55 +2273,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fef4db61488a346916e37d37e582ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modernAnimalPrefabs:
-  - {fileID: 2237908133021072138, guid: 5b1a01ba97950a14c839ec9415d4a610, type: 3}
-  - {fileID: 1164786757555227949, guid: eac21490aacf74d44bf423f1723b3984, type: 3}
-  - {fileID: 2107204405445670501, guid: 09e8f6f7d1c779f47a4d25e0ac3a6eaa, type: 3}
-  - {fileID: 4661671867213478004, guid: cffcb88ee059f004d9afc528396372dd, type: 3}
-  - {fileID: 8343524777897171123, guid: 9da53179d8841b544a7fa1e1bd5e315a, type: 3}
-  - {fileID: 6833148709677428646, guid: d171a0845bb02b949b556a1568cef60e, type: 3}
-  - {fileID: 1606093063788578672, guid: f6383d3f661501d4b8bb7c9047c8bc62, type: 3}
-  - {fileID: 4027072156694676514, guid: d56508ff7eaecdb4eb4081e9d9f22e3f, type: 3}
-  - {fileID: 2470014985980424774, guid: 04e949c5d9f9c9848bfa8090e27ff1a4, type: 3}
-  - {fileID: 3264559413682142771, guid: 65ea9a76392d0d647b339e7871443d71, type: 3}
-  - {fileID: 756802079760276097, guid: 83b7c15df8bff394c919be049f98bfb2, type: 3}
-  - {fileID: 4650462168162639704, guid: 0f18943991626b148a9e2c91d33a31fe, type: 3}
-  - {fileID: 2165831034482599554, guid: 8615b9171b68e2c45b489cb973784a15, type: 3}
-  - {fileID: 1772703819922836971, guid: 11100514f881fa847b760e73120b5740, type: 3}
-  - {fileID: 3531622902389192486, guid: cbb8aa629811ce440bdda0398b05bf9e, type: 3}
-  - {fileID: 7241523876279446532, guid: ac547d5b4dee1d0439de52901170cfed, type: 3}
-  - {fileID: 7670557855712091598, guid: e75f82c3610b9ae4099f68b0c55eed9c, type: 3}
-  - {fileID: 3352541463029844601, guid: da4356bc803242547a12c0bb4afd5ecf, type: 3}
-  - {fileID: 7052986184392456005, guid: 97928ea2660efe64a9b490775740c669, type: 3}
-  - {fileID: 3429150140979843136, guid: a05c0d390f1a2ea4fa238c0128a41cda, type: 3}
-  - {fileID: 437701716717647006, guid: 4467bd1f774473548ac368d1d301526b, type: 3}
-  - {fileID: 6241279020202497435, guid: 5662eb0814b371c4fb7c4baabf0640a7, type: 3}
-  - {fileID: 5706888348671889907, guid: 6bc2a6e139aa125438d6ad20884e26d3, type: 3}
-  - {fileID: 6981261644691198172, guid: f6679c6cd11acc44fa7c0627d924db06, type: 3}
-  - {fileID: 2833809899537160136, guid: 439934ed15db8b64a98276971523d61a, type: 3}
-  - {fileID: 5194542057106140069, guid: c459c179dca421348b1b3376e00051aa, type: 3}
-  - {fileID: 8648842015438017846, guid: bfefaa412545afe4e99dc14d548eb8a6, type: 3}
-  - {fileID: 6908108907970214928, guid: 41a2914f12f7f3546833a1c1c5264870, type: 3}
-  - {fileID: 8557963588792686252, guid: 7d0368b7e600a684cb628b78e50ce747, type: 3}
-  - {fileID: 5454602676960692379, guid: 07163488ab27b3248be6b64944b3b0c3, type: 3}
-  - {fileID: 1449813231271673775, guid: 569ff9dd00f85a74b97c408498ab051f, type: 3}
-  - {fileID: 9211557606680381929, guid: e656bb3283f7c454bb2af0ce64be60b7, type: 3}
-  - {fileID: 7884555558039585123, guid: a50400a5617aa7a4eb067c3647fcb07a, type: 3}
-  - {fileID: 3334380833997433068, guid: 808cdc94bb7883c488dad68f40aa1cd6, type: 3}
-  - {fileID: 51744697672204148, guid: 3f19330f703474346be53c3428d0b6eb, type: 3}
-  - {fileID: 5409557552802857308, guid: decdcfed31ac83c42bf842a5fdb876ed, type: 3}
-  prehistoricAnimalPrefabs:
-  - {fileID: 888560065454259616, guid: 744f3a4acf83443489dfa3c827ce07d5, type: 3}
-  - {fileID: 6734117511853304455, guid: 530bda964659b0b4181e9fa9119d0018, type: 3}
-  - {fileID: 7287935261950715096, guid: f7074965724331d43a7eca1ebcc2ed60, type: 3}
-  - {fileID: 7055777860662105789, guid: 0dae9ecf515805e4db56a28548497d56, type: 3}
-  - {fileID: 888560065454259616, guid: 57491223262d13f4ca4eccda4c424110, type: 3}
-  - {fileID: 345120024899677269, guid: 055efd64ef85cc9449f562dcf7828dd2, type: 3}
-  - {fileID: 7756981684405134400, guid: 888f0e1b37f2b874387947ce06cd0630, type: 3}
-  - {fileID: 4008416654424527486, guid: 06dbac27a5e38fa4e8c21ca738d67e9a, type: 3}
-  - {fileID: 1827001399555616845, guid: 71a45946c19848d47ba8c36168433c9f, type: 3}
-  - {fileID: 8137827638819006443, guid: 9f9255af7cc51ab459f157c55497b0f9, type: 3}
-  - {fileID: 5470935725518870977, guid: 34ccf16cfb2642a4c89de5bc72896e56, type: 3}
+  playerPrefab: {fileID: 8979255984199661889, guid: 199d96d7eaa84d9418a264500c31b3a5,
+    type: 3}
+  modernAnimalPrefabs: []
+  prehistoricAnimalPrefabs: []
+--- !u!114 &1421959749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421959744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942eea63ce4fd14880940e798690aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1454771182
 GameObject:
   m_ObjectHideFlags: 0

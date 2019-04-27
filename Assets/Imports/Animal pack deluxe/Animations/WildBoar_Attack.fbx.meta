@@ -369,7 +369,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: DoAttack
+        functionName: DoDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

@@ -12,7 +12,7 @@ public class Intro : MonoBehaviour
 	{
 		if (Time.time > 10)
 		{
-			GameManager.instance.sceneController.FadeAndLoadScene("Scene 1");
+			GameManager.instance.sceneController.FadeAndLoadScene("Scene1");
 		}
 	}
 
@@ -23,11 +23,11 @@ public class Intro : MonoBehaviour
 
 	public void LoadMap()
 	{
-		GameManager.instance.sceneController.FadeAndLoadScene("Scene 1");
+		GameManager.instance.sceneController.FadeAndLoadScene("Scene1");
 	}
 
 	public void LoadTestMap()
 	{
-		GameManager.instance.sceneController.FadeAndLoadScene("TestMap1");
+		GameManager.instance.sceneController.FadeAndLoadScene("Test1");
 	}
 }

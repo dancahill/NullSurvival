@@ -59,6 +59,7 @@ public class SpawnManager : MonoBehaviour
 		Animal[] animals = GameObject.Find("Spawns").GetComponentsInChildren<Animal>(true);
 		List<SpawnCount> animalcount = new List<SpawnCount>();
 		Player p = FindObjectOfType<Player>();
+		if (!p) yield break;
 		animalcount.Clear();
 		int i = 0;
 		int ac = 0;
@@ -109,7 +110,7 @@ public class SpawnManager : MonoBehaviour
 		}
 		//Animal[] animals = FindObjectsOfType<Animal>();
 		//lastSpawnsCount = animals.Length;
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			//UpdateSpawnCounts();
 			totalAnimals = animalCount.Sum(x => x.count);
@@ -182,6 +183,7 @@ public class SpawnManager : MonoBehaviour
 			AddSpawnToCount(g.name);
 
 			Player p = FindObjectOfType<Player>();
+			if (!p) return;
 			bool inrange = Vector3.Distance(g.transform.position, p.transform.position) <= SceneManager.instance.maxDinoActiveDistance;
 			g.gameObject.SetActive(inrange);
 

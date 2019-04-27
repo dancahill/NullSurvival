@@ -627,9 +627,11 @@
     <Compile Include="Assets\Imports\SimpleTouchController\Scripts\SimpleTouchController.cs" />
     <Compile Include="Assets\Scripts\Animal.cs" />
     <Compile Include="Assets\Scripts\AnimalAnimator.cs" />
+    <Compile Include="Assets\Scripts\AnimalAnimatorEvents.cs" />
     <Compile Include="Assets\Scripts\AnimalCharacter.cs" />
-    <Compile Include="Assets\Scripts\AnimalInteraction.cs" />
+    <Compile Include="Assets\Scripts\AnimalColliderInteraction.cs" />
     <Compile Include="Assets\Scripts\AnimalMotor.cs" />
+    <Compile Include="Assets\Scripts\AnimalPrefabs.cs" />
     <Compile Include="Assets\Scripts\AnimalStats.cs" />
     <Compile Include="Assets\Scripts\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
@@ -638,6 +640,7 @@
     <Compile Include="Assets\Scripts\Ground.cs" />
     <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\Intro.cs" />
+    <Compile Include="Assets\Scripts\LoadAssetBundles.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimator.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />

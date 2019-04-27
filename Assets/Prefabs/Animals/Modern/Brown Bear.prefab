@@ -69,7 +69,7 @@ MonoBehaviour:
   isDead: 0
   era: 0
   habitat: 0
-  currentAggression: 1
+  currentAggression: 2
   modelDimensions: {x: 0, y: 0, z: 0}
   character:
     transform: {fileID: 0}
