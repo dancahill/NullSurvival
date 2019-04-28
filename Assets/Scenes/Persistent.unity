@@ -52,7 +52,7 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
@@ -2289,6 +2289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b942eea63ce4fd14880940e798690aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dependencies:
+  - {fileID: 100006, guid: b544816461f324e56a39767fdeb5b114, type: 3}
+  - {fileID: 100006, guid: 843740dbe549a4a6ba9556d1b80001f5, type: 3}
 --- !u!1 &1454771182
 GameObject:
   m_ObjectHideFlags: 0
@@ -3179,7 +3182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1851015609
 RectTransform:
   m_ObjectHideFlags: 0

@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{E706AFB1-0826-8A53-3932-8CAB8CE85B69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.AssetBundleBrowser.Editor", "Unity.AssetBundleBrowser.Editor.csproj", "{2D3544DE-F05C-61DF-8811-E4D43F626433}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.AssetBundleBrowser.Editor.Tests", "Unity.AssetBundleBrowser.Editor.Tests.csproj", "{41CB76E7-2BF2-60AB-614F-91DAEB1932AA}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{62BCB534-E120-D845-EEF6-6CB3A20C2ABF}"
 EndProject
 Global
@@ -21,6 +25,14 @@ Global
 		{E706AFB1-0826-8A53-3932-8CAB8CE85B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E706AFB1-0826-8A53-3932-8CAB8CE85B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E706AFB1-0826-8A53-3932-8CAB8CE85B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D3544DE-F05C-61DF-8811-E4D43F626433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D3544DE-F05C-61DF-8811-E4D43F626433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D3544DE-F05C-61DF-8811-E4D43F626433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D3544DE-F05C-61DF-8811-E4D43F626433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41CB76E7-2BF2-60AB-614F-91DAEB1932AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41CB76E7-2BF2-60AB-614F-91DAEB1932AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41CB76E7-2BF2-60AB-614F-91DAEB1932AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41CB76E7-2BF2-60AB-614F-91DAEB1932AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62BCB534-E120-D845-EEF6-6CB3A20C2ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62BCB534-E120-D845-EEF6-6CB3A20C2ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62BCB534-E120-D845-EEF6-6CB3A20C2ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU

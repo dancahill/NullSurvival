@@ -77,4 +77,41 @@ public class Ground : Interactable
 		TreeManager.RemoveAt(hit.point);
 		return true;
 	}
+
+	public class PointHeight
+	{
+		public bool hit;
+		public float groundHeight;
+		public float waterHeight;
+		public float waterDepth;
+	}
+
+	public static PointHeight GetHeightAtPoint(Vector3 point)
+	{
+		PointHeight h = new PointHeight
+		{
+			hit = Physics.Raycast(point, Vector3.down, out RaycastHit hit, Mathf.Infinity)
+		};
+		if (h.hit)
+		{
+			string layername = LayerMask.LayerToName(hit.transform.gameObject.layer);
+			//if (hit.transform.name == "Water" || hit.transform.name == "WaterBasicNightime")
+			//if (layername == "Ground" || layername == "Water")
+			if (layername == "Water")
+			{
+				//Debug.Log("ray hit water at " + hit.point);
+				h.waterHeight = hit.point.y;
+				bool hitground = Physics.Raycast(new Vector3(point.x, hit.point.y - 0.05f, point.z), Vector3.down, out hit, Mathf.Infinity);
+				//if (hitground)
+				//{
+				//	layername = LayerMask.LayerToName(hit.transform.gameObject.layer);
+				//	Debug.Log("ray after water is " + hit.point + " hit ground " + hitground + "(" + layername + ")");
+				//}
+			}
+			h.groundHeight = hit.point.y;
+			h.waterDepth = h.waterHeight - h.groundHeight;
+			if (h.waterDepth < 0) h.waterDepth = 0;
+		}
+		return h;
+	}
 }

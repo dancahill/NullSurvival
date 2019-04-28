@@ -74,31 +74,30 @@
     <Compile Include="Assets\Imports\SimpleTouchController\Scripts\InfoTouches.cs" />
     <Compile Include="Assets\Imports\SimpleTouchController\Scripts\PlayerMoveController.cs" />
     <Compile Include="Assets\Imports\SimpleTouchController\Scripts\SimpleTouchController.cs" />
-    <Compile Include="Assets\Scripts\Animal.cs" />
-    <Compile Include="Assets\Scripts\AnimalAnimator.cs" />
-    <Compile Include="Assets\Scripts\AnimalAnimatorEvents.cs" />
-    <Compile Include="Assets\Scripts\AnimalCharacter.cs" />
-    <Compile Include="Assets\Scripts\AnimalColliderInteraction.cs" />
-    <Compile Include="Assets\Scripts\AnimalMotor.cs" />
-    <Compile Include="Assets\Scripts\AnimalPrefabs.cs" />
+    <Compile Include="Assets\Scripts\Animal\Animal.cs" />
+    <Compile Include="Assets\Scripts\Animal\AnimalAnimator.cs" />
+    <Compile Include="Assets\Scripts\Animal\AnimalAnimatorEvents.cs" />
+    <Compile Include="Assets\Scripts\Animal\AnimalCharacter.cs" />
+    <Compile Include="Assets\Scripts\Animal\AnimalColliderInteraction.cs" />
+    <Compile Include="Assets\Scripts\Animal\AnimalMotor.cs" />
     <Compile Include="Assets\Scripts\AnimalStats.cs" />
-    <Compile Include="Assets\Scripts\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
-    <Compile Include="Assets\Scripts\GameCanvas.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\AnimalPrefabs.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\CanvasManager.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\GameCanvas.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\LoadAssetBundles.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\SceneController.cs" />
     <Compile Include="Assets\Scripts\Ground.cs" />
     <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\Intro.cs" />
-    <Compile Include="Assets\Scripts\LoadAssetBundles.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\PlayerAnimator.cs" />
-    <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAnimator.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\PlayerInput.cs" />
-    <Compile Include="Assets\Scripts\SceneController.cs" />
-    <Compile Include="Assets\Scripts\SceneManager.cs" />
-    <Compile Include="Assets\Scripts\SpawnManager.cs" />
-    <Compile Include="Assets\Scripts\TreeManager.cs" />
-    <Compile Include="Assets\Scripts\Util.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\SpawnManager.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\TreeManager.cs" />
     <None Include="Assets\Imports\NatureStarterKit2\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Imports\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
     <None Include="Assets\Imports\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
@@ -742,6 +741,10 @@
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{E706AFB1-0826-8A53-3932-8CAB8CE85B69}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.AssetBundleBrowser.Editor.csproj">
+      <Project>{2D3544DE-F05C-61DF-8811-E4D43F626433}</Project>
+      <Name>Unity.AssetBundleBrowser.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

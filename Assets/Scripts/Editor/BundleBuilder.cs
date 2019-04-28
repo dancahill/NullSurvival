@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
+using System.IO;
 
 public class BundleBuilder : Editor
 {
@@ -14,7 +15,8 @@ public class BundleBuilder : Editor
 	static void BuildAllAssetBundles_Android()
 	{
 		Debug.Log("building bundles for '" + BuildTarget.Android + "'");
-		BuildPipeline.BuildAssetBundles(@"Assets/AssetBundles/" + BuildTarget.Android, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.Android);
+		MkDir(BuildTarget.Android);
+		BuildPipeline.BuildAssetBundles("Assets/AssetBundles/" + BuildTarget.Android, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.Android);
 		Debug.Log("done building '" + BuildTarget.Android + "'");
 	}
 
@@ -22,8 +24,15 @@ public class BundleBuilder : Editor
 	static void BuildAllAssetBundles_WebGL()
 	{
 		Debug.Log("building bundles for '" + BuildTarget.WebGL + "'");
+		MkDir(BuildTarget.WebGL);
 		BuildPipeline.BuildAssetBundles(@"Assets/AssetBundles/" + BuildTarget.WebGL, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.WebGL);
 		Debug.Log("done building '" + BuildTarget.WebGL + "'");
+	}
+
+	private static void MkDir(BuildTarget target)
+	{
+		if (!Directory.Exists("Assets/AssetBundles")) Directory.CreateDirectory("Assets/AssetBundles");
+		if (!Directory.Exists("Assets/AssetBundles/" + target)) Directory.CreateDirectory("Assets/AssetBundles/" + target);
 	}
 }
 
